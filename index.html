@@ -825,9 +825,14 @@ function toggleSearchPanel(force){var next=(typeof force==='boolean')?force:!vie
 if(next){_searchOpenAtScrollY=window.scrollY||document.documentElement.scrollTop||0;if(searchPanelEl){searchPanelEl.hidden=false;searchPanelEl.classList.remove('search-panel--collapsing');}
 _focusSearchInputNow();}else{if(searchPanelEl){searchPanelEl.classList.add('search-panel--collapsing');setTimeout(function(){if(!viewState.searchPanelOpen&&searchPanelEl){searchPanelEl.hidden=true;searchPanelEl.classList.remove('search-panel--collapsing');}},220);}
 if(searchIconBtn)searchIconBtn.focus();}
-if(_perfT0){var _sync=performance.now()-_perfT0;requestAnimationFrame(function(){requestAnimationFrame(function(){var _painted=performance.now()-_perfT0;try{console.log('[search '+(next?'OPEN':'close')+'] '
-+'sync handler '+_sync.toFixed(1)+'ms · '
-+'tap→painted '+_painted.toFixed(1)+'ms');}catch(_){}});});}}
+if(_perfT0){var _sync=performance.now()-_perfT0;requestAnimationFrame(function(){requestAnimationFrame(function(){var _painted=performance.now()-_perfT0;var msg=(next?'OPEN':'close')
++' — JS '+_sync.toFixed(0)+'ms · paint '+_painted.toFixed(0)+'ms';try{console.log('[search] '+msg);}catch(_){}
+_showPerfBadge(msg);});});}}
+function _showPerfBadge(text){try{var el=document.getElementById('search-perf-badge');if(!el){el=document.createElement('div');el.id='search-perf-badge';el.style.cssText='position:fixed;left:8px;right:8px;top:8px;'
++'z-index:99999;background:#111;color:#0f0;font:600 14px/1.4 '
++'monospace;padding:8px 10px;border-radius:8px;text-align:center;'
++'box-shadow:0 2px 8px rgba(0,0,0,.4);pointer-events:none;';document.body.appendChild(el);}
+el.textContent='search '+text;}catch(_){}}
 function handleCategoryChip(cat,btn){var pressed=btn.getAttribute('aria-pressed')==='true';var nextPressed=!pressed;btn.setAttribute('aria-pressed',nextPressed?'true':'false');var hidden=(profile.hidden_categories||[]).slice();var idx=hidden.indexOf(cat);if(nextPressed&&idx!==-1)hidden.splice(idx,1);if(!nextPressed&&idx===-1)hidden.push(cat);profile.hidden_categories=hidden;saveProfile();requestRenderAll({preserveScores:true});}
 function handleQuickToggle(rule,checked){profile.rule_states=profile.rule_states||{};profile.rule_states[rule]=checked?'on':'off';saveProfile();requestRenderAll({preserveScores:true});}
 function getActiveFilterSummary(){var hidden=(profile.hidden_categories||[]).slice();var dio=((profile.rule_states||{}).date_idea_only||'off')==='on';return{hiddenCategories:hidden,dateIdeaOnly:dio,total:hidden.length+(dio?1:0),};}
