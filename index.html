@@ -824,10 +824,10 @@ if(_pm){_perfFocus='style '+(_pb-_pa).toFixed(0)
 +' · focus '+(_pc-_pb).toFixed(0)
 +' · sel '+(performance.now()-_pc).toFixed(0);}}
 var _searchOpenAtScrollY=0;var _SEARCH_PERFLOG=false;try{_SEARCH_PERFLOG=/[?&](debug|perflog|swipelog)=1\b/.test(location.search);}catch(_){}
-var _perfFocus='';var _SEARCH_BUILD='v8';var _FOCUSTEST=false;try{_FOCUSTEST=/[?&]focustest=1\b/.test(location.search);}catch(_){}
+var _perfFocus='';var _SEARCH_BUILD='v9';var _FOCUSTEST=false;try{_FOCUSTEST=/[?&]focustest=1\b/.test(location.search);}catch(_){}
 function toggleSearchPanel(force){var next=(typeof force==='boolean')?force:!viewState.searchPanelOpen;if(next===viewState.searchPanelOpen)return;var _perfT0=(_SEARCH_PERFLOG&&typeof performance!=='undefined')?performance.now():0;viewState.searchPanelOpen=next;saveViewState();if(searchIconBtn){searchIconBtn.setAttribute('aria-expanded',next?'true':'false');}
 if(next){_searchOpenAtScrollY=window.scrollY||document.documentElement.scrollTop||0;if(searchPanelEl){searchPanelEl.hidden=false;searchPanelEl.classList.remove('search-panel--collapsing');}
-if(_FOCUSTEST){var _mEl=document.getElementById('main');var _mDisp=_mEl?_mEl.style.display:'';if(_mEl)_mEl.style.display='none';_focusSearchInputNow();if(_mEl)_mEl.style.display=_mDisp;}else{_focusSearchInputNow();}}else{if(searchPanelEl){searchPanelEl.classList.add('search-panel--collapsing');setTimeout(function(){if(!viewState.searchPanelOpen&&searchPanelEl){searchPanelEl.hidden=true;searchPanelEl.classList.remove('search-panel--collapsing');}},220);}
+if(_FOCUSTEST){var _mEl=document.getElementById('main');var _mParent=_mEl&&_mEl.parentNode;var _mNext=_mEl&&_mEl.nextSibling;if(_mParent)_mParent.removeChild(_mEl);_focusSearchInputNow();if(_mParent)_mParent.insertBefore(_mEl,_mNext);}else{_focusSearchInputNow();}}else{if(searchPanelEl){searchPanelEl.classList.add('search-panel--collapsing');setTimeout(function(){if(!viewState.searchPanelOpen&&searchPanelEl){searchPanelEl.hidden=true;searchPanelEl.classList.remove('search-panel--collapsing');}},220);}
 if(searchIconBtn)searchIconBtn.focus();}
 if(_perfT0){var _sync=performance.now()-_perfT0;requestAnimationFrame(function(){requestAnimationFrame(function(){var _painted=performance.now()-_perfT0;var msg=_SEARCH_BUILD+(_FOCUSTEST?' (focustest)':'')+' '
 +(next?'OPEN':'close')
