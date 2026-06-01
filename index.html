@@ -81,7 +81,10 @@ function _eventSearchHaystack(ev){return((ev.title||'')+' '+
 (ev.venue||'')+' '+
 (ev.suburb||'')+' '+
 (ev.context_line||'')+' '+
-((ev.subcategories||[]).join(' '))).toLowerCase();}
+((ev.subcategories||[]).join(' '))+' '+
+(ev.date_idea?'date idea':'')+' '+
+(multiDaySpan(ev)?'multi-day':'')+' '+
+(ev.price?(eventIsFree(ev)?'free':compactPrice(ev.price)):'')).toLowerCase();}
 function eventMatchesSearch(ev,tokens){if(!tokens||!tokens.length)return true;var hay=_eventSearchHaystack(ev);for(var i=0;i<tokens.length;i++){if(hay.indexOf(tokens[i])===-1)return false;}
 return true;}
 var searchStats={events:0,days:{},hiddenAlsoMatch:0};var stackedObserver=null;var LEGACY_SHAPE_DEFAULTS={avoid_bonus:-0.36,};function loadStoredProfile(){try{var raw=localStorage.getItem(STORAGE_KEY);var parsed=raw?JSON.parse(raw):{};var shape=parsed&&parsed.shape;if(shape){var changed=false;for(var k in LEGACY_SHAPE_DEFAULTS){if(shape[k]===LEGACY_SHAPE_DEFAULTS[k]){delete shape[k];changed=true;}}
