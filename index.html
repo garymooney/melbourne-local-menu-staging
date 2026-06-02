@@ -90,7 +90,7 @@ function _eventSearchHaystack(ev){return _normSearch((ev.title||'')+' '+
 function eventMatchesSearch(ev,tokens){if(!tokens||!tokens.length)return true;var hay=_eventSearchHaystack(ev);for(var i=0;i<tokens.length;i++){if(hay.indexOf(tokens[i])===-1)return false;}
 return true;}
 var searchSuggestEl=null;var _tagVocab=null;var _suggestItems=[];var _suggestActive=-1;function _ensureTagVocab(){if(_tagVocab)return _tagVocab;var seen={};for(var i=0;i<events.length;i++){var ev=events[i];var subs=ev.subcategories||[];for(var j=0;j<subs.length;j++){var t=String(subs[j]).toLowerCase().trim();if(t)seen[t]=true;}
-if(ev.date_idea)seen['date-idea']=true;if(multiDaySpan(ev))seen['multi-day']=true;}
+if(ev.date_idea)seen['date-idea']=true;if(multiDaySpan(ev))seen['multi-day']=true;if(ev.price&&eventIsFree(ev))seen['free']=true;}
 _tagVocab=Object.keys(seen).sort();return _tagVocab;}
 function _collapseTag(s){return String(s==null?'':s).toLowerCase().replace(/[#\-_\s]+/g,'');}
 function _searchTokenAtCaret(){var v=searchInputEl?(searchInputEl.value||''):'';var caret=v.length;try{if(searchInputEl&&searchInputEl.selectionStart!=null){caret=searchInputEl.selectionStart;}}catch(_){}
