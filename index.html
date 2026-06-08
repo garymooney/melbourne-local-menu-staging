@@ -862,7 +862,7 @@ function mountSearchUI(){searchInputEl=document.getElementById('search-input');s
 if(searchIconBtn){searchIconBtn.setAttribute('aria-expanded',viewState.searchPanelOpen?'true':'false');}
 if(searchPanelEl){searchPanelEl.hidden=!viewState.searchPanelOpen;}
 if(document.body){document.body.classList.toggle('search-modal-open',!!viewState.searchPanelOpen);}
-if(viewState.searchPanelOpen)updateSearchSuggest();if(searchInputEl){var debounced=debounce(onSearchInput,80);searchInputEl.addEventListener('input',debounced);}
+if(viewState.searchPanelOpen)updateSearchSuggest();if(searchInputEl){var debounced=debounce(onSearchInput,80);searchInputEl.addEventListener('input',debounced);var _inputFocusY=null;searchInputEl.addEventListener('focus',function(){_inputFocusY=window.scrollY||document.documentElement.scrollTop||0;});searchInputEl.addEventListener('blur',function(){if(_inputFocusY==null)return;var y=_inputFocusY;_inputFocusY=null;setTimeout(function(){var now=window.scrollY||document.documentElement.scrollTop||0;if(Math.abs(now-y)>1){try{window.scrollTo(0,y);}catch(_){}}},320);});}
 if(searchSuggestEl){searchSuggestEl.addEventListener('mousedown',function(e){var btn=e.target.closest&&e.target.closest('[data-toggle-tag]');if(!btn)return;e.preventDefault();_toggleTag(btn.getAttribute('data-toggle-tag'));});}
 if(window.visualViewport){window.visualViewport.addEventListener('resize',_sizeSuggestToViewport);window.visualViewport.addEventListener('scroll',_sizeSuggestToViewport);}
 var _lastWinW=window.innerWidth;window.addEventListener('resize',function(){if(window.innerWidth!==_lastWinW){_lastWinW=window.innerWidth;_lockedPickerH=0;_sizeSuggestToViewport();}
