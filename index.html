@@ -95,13 +95,14 @@ return out;}
 function eventMatchesSearch(ev,tokens){if(!tokens||!tokens.length)return true;var hay=null,tagTexts=null;for(var i=0;i<tokens.length;i++){var t=tokens[i];if(t.charAt(0)==='#'){var frag=t.slice(1);if(!frag)continue;if(tagTexts==null)tagTexts=_eventTagText(ev);var ok=false;for(var j=0;j<tagTexts.length;j++){if(tagTexts[j].indexOf(frag)!==-1){ok=true;break;}}
 if(!ok)return false;}else{if(hay==null)hay=_eventSearchHaystack(ev);if(hay.indexOf(t)===-1)return false;}}
 return true;}
-var searchSuggestEl=null;var _tagVocab=null;var _tagSectionMap=null;var _suggestItems=[];var _suggestActive=-1;var _suggestKey='';function _ensureTagVocab(){if(_tagVocab)return _tagVocab;var seen={};for(var i=0;i<events.length;i++){var ev=events[i];var subs=ev.subcategories||[];for(var j=0;j<subs.length;j++){var t=String(subs[j]).toLowerCase().trim();if(t)seen[t]=true;}
+var searchSuggestEl=null;var _tagVocab=null;var _tagSectionMap=null;var _broadSet=null;var _suggestItems=[];var _suggestActive=-1;var _suggestKey='';function _ensureTagVocab(){if(_tagVocab)return _tagVocab;var seen={};for(var i=0;i<events.length;i++){var ev=events[i];var subs=ev.subcategories||[];for(var j=0;j<subs.length;j++){var t=String(subs[j]).toLowerCase().trim();if(t)seen[t]=true;}
 if(ev.date_idea)seen['date-idea']=true;if(multiDaySpan(ev))seen['multi-day']=true;if(ev.price&&eventIsFree(ev))seen['free']=true;}
 _tagVocab=Object.keys(seen).sort();return _tagVocab;}
-function _tagSectionFor(tag){if(!_tagSectionMap){_tagSectionMap={};var tax=profile.subcategory_taxonomy||{};for(var ci=0;ci<CATEGORY_ORDER.length;ci++){var ck=CATEGORY_ORDER[ci],tg=tax[ck]||[];for(var ti=0;ti<tg.length;ti++){var t=String(tg[ti]).toLowerCase();if(!(t in _tagSectionMap))_tagSectionMap[t]=ck;}}}
-if(tag==='free'||tag==='date-idea'||tag==='multi-day')return'__quick';return _tagSectionMap[tag]||'other';}
-function _buildSuggestGroups(list){var QUICK='__quick',order=[QUICK].concat(CATEGORY_ORDER),buckets={};for(var i=0;i<list.length;i++){var sec=_tagSectionFor(list[i]);(buckets[sec]||(buckets[sec]=[])).push(list[i]);}
-var html='',items=[],idx=0;for(var o=0;o<order.length;o++){var key=order[o],tags=buckets[key];if(!tags||!tags.length)continue;var label=key===QUICK?'Quick filters':(CATEGORY_DISPLAY[key]||key);html+='<div class="search-suggest__group" role="group" aria-label="'+escapeHtml(label)+'">'
+function _tagSectionFor(tag){if(!_tagSectionMap){_tagSectionMap={};var tax=profile.subcategory_taxonomy||{};for(var ci=0;ci<CATEGORY_ORDER.length;ci++){var ck=CATEGORY_ORDER[ci],tg=tax[ck]||[];for(var ti=0;ti<tg.length;ti++){var t=String(tg[ti]).toLowerCase();if(!(t in _tagSectionMap))_tagSectionMap[t]=ck;}}
+_broadSet={};var broad=profile.broad_subcategories||defaultProfile.broad_subcategories||[];for(var bi=0;bi<broad.length;bi++){_broadSet[String(broad[bi]).toLowerCase()]=true;}}
+if(tag==='free'||tag==='date-idea'||tag==='multi-day')return'__quick';if(_broadSet[tag])return'__broad';return _tagSectionMap[tag]||'other';}
+function _buildSuggestGroups(list){var QUICK='__quick',BROAD='__broad';var order=[QUICK,BROAD].concat(CATEGORY_ORDER),buckets={};for(var i=0;i<list.length;i++){var sec=_tagSectionFor(list[i]);(buckets[sec]||(buckets[sec]=[])).push(list[i]);}
+var html='',items=[],idx=0;for(var o=0;o<order.length;o++){var key=order[o],tags=buckets[key];if(!tags||!tags.length)continue;var label=key===QUICK?'Quick filters':key===BROAD?'Broad':(CATEGORY_DISPLAY[key]||key);html+='<div class="search-suggest__group" role="group" aria-label="'+escapeHtml(label)+'">'
 +'<div class="search-suggest__heading" aria-hidden="true">'+escapeHtml(label)+'</div>'
 +'<div class="search-suggest__chips">';for(var k=0;k<tags.length;k++){html+='<button type="button" class="search-suggest__item" role="option" '
 +'aria-selected="false" data-suggest-idx="'+idx+'">#'
