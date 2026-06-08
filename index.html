@@ -102,7 +102,7 @@ function _tagSectionFor(tag){if(!_tagSectionMap){_tagSectionMap={};var tax=profi
 _broadSet={};var broad=profile.broad_subcategories||defaultProfile.broad_subcategories||[];for(var bi=0;bi<broad.length;bi++){_broadSet[String(broad[bi]).toLowerCase()]=true;}}
 if(tag==='free'||tag==='date-idea'||tag==='multi-day')return'__quick';if(_broadSet[tag])return'__broad';return _tagSectionMap[tag]||'other';}
 function _buildSuggestGroups(list){var QUICK='__quick',BROAD='__broad';var order=[QUICK,BROAD].concat(CATEGORY_ORDER),buckets={};for(var i=0;i<list.length;i++){var sec=_tagSectionFor(list[i]);(buckets[sec]||(buckets[sec]=[])).push(list[i]);}
-var html='',items=[],idx=0;for(var o=0;o<order.length;o++){var key=order[o],tags=buckets[key];if(!tags||!tags.length)continue;var label=key===QUICK?'Quick filters':key===BROAD?'Broad':(CATEGORY_DISPLAY[key]||key);html+='<div class="search-suggest__group" role="group" aria-label="'+escapeHtml(label)+'">'
+var html='',items=[],idx=0;for(var o=0;o<order.length;o++){var key=order[o],tags=buckets[key];if(!tags||!tags.length)continue;var label=key===QUICK?'Quick filters':key===BROAD?'Style':(CATEGORY_DISPLAY[key]||key);html+='<div class="search-suggest__group" role="group" aria-label="'+escapeHtml(label)+'">'
 +'<div class="search-suggest__heading" aria-hidden="true">'+escapeHtml(label)+'</div>'
 +'<div class="search-suggest__chips">';for(var k=0;k<tags.length;k++){html+='<button type="button" class="search-suggest__item" role="option" '
 +'aria-selected="false" data-suggest-idx="'+idx+'">#'
