@@ -126,8 +126,9 @@ function updateSearchSuggest(){if(!searchSuggestEl)return;var vocab=_ensureTagVo
 if(!searchSuggestEl.hidden&&_suggestKey==='all'){_syncSuggestSelected();_sizeSuggestToViewport();return;}
 _suggestKey='all';searchSuggestEl.innerHTML=_buildSuggestGroups(vocab);searchSuggestEl.hidden=false;_sizeSuggestToViewport();}
 function _syncSuggestSelected(){if(!searchSuggestEl||searchSuggestEl.hidden)return;var pills=searchSuggestEl.querySelectorAll('[data-toggle-tag]');for(var i=0;i<pills.length;i++){var on=_tagIsSelected(pills[i].getAttribute('data-toggle-tag'));pills[i].classList.toggle('is-selected',on);pills[i].setAttribute('aria-pressed',on?'true':'false');}}
-function _sizeSuggestToViewport(){if(!searchSuggestEl||searchSuggestEl.hidden)return;var vv=window.visualViewport;if(!vv){searchSuggestEl.style.maxHeight='';return;}
-var top=searchSuggestEl.getBoundingClientRect().top;var avail=vv.height-top-12;var cap=_isCoarsePointer?210:320;if(avail>cap)avail=cap;if(avail<96)avail=96;searchSuggestEl.style.maxHeight=avail+'px';}
+var _kbViewportH=0;function _sizeSuggestToViewport(){if(!searchSuggestEl||searchSuggestEl.hidden)return;var vv=window.visualViewport;if(!vv){searchSuggestEl.style.maxHeight='';return;}
+var winH=window.innerHeight||vv.height;if(vv.height<winH-120)_kbViewportH=vv.height;var effH=vv.height;if(_isCoarsePointer){effH=_kbViewportH||Math.round(winH*0.55);if(effH>vv.height)effH=vv.height;}
+var top=searchSuggestEl.getBoundingClientRect().top;var avail=effH-top-12;var cap=_isCoarsePointer?210:320;if(avail>cap)avail=cap;if(avail<96)avail=96;searchSuggestEl.style.maxHeight=avail+'px';}
 function hideSearchSuggest(){if(!searchSuggestEl||searchSuggestEl.hidden)return;searchSuggestEl.hidden=true;searchSuggestEl.innerHTML='';searchSuggestEl.style.maxHeight='';_suggestKey='';}
 function _buildChipsHtml(list){var html='';for(var i=0;i<list.length;i++){var name=list[i];var cls='search-chip'+(_tagIsQuick(name)?' search-chip--quick':'');html+='<span class="'+cls+'">'
 +'<span class="search-chip__label">#'+escapeHtml(name)+'</span>'
