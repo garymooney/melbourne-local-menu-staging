@@ -750,7 +750,7 @@ renderS2Collapse({name:'watchlist',label:'Following',preview:s2WatchlistPreview(
 renderS2Collapse({name:'tags',label:'Event tags',preview:s2TagsPreview(),helper:'Boost or hide topics. Tap a tag to cycle your preference.',body:renderS2TagsBody(),modified:counts.tags>0,resetAction:'reset-tags',resetLabel:'reset',})+
 renderS2Collapse({name:'vibes',label:'Event themes',preview:s2FeelsPreview(),helper:'How drawn you are to each kind of experience. Tap to cycle your preference.',body:renderS2FeelsBody(),modified:counts.vibes>0,resetAction:'reset-vibes',resetLabel:'reset',})+
 renderS2Collapse({name:'identity',label:'Who it’s for',preview:s2IdentityPreview(),helper:'Groups you want to see events for, and the age band '+'the menu should stick to.',body:renderS2IdentityBody(),modified:s2IdentityModified(),resetAction:'reset-identity',resetLabel:'reset',})+
-renderS2Collapse({name:'rules',label:'Rules',preview:s2RulesPreview(),body:renderRulesPanel(),modified:counts.rules>0,resetAction:'reset-rules',resetLabel:'reset',})+
+renderS2Collapse({name:'rules',label:'Boosts',preview:s2RulesPreview(),body:renderRulesPanel(),modified:counts.rules>0,resetAction:'reset-rules',resetLabel:'reset',})+
 renderS2EngineRoomLink(counts.shape>0)+
 renderHiddenEventsFooter()+'</div>');}
 function s2SwitchView(name,opts){opts=opts||{};var view=document.getElementById('settings-view');if(!view)return;var settings=view.querySelector('[data-s2-view="settings"]');var engine=view.querySelector('[data-s2-view="engine"]');if(!settings||!engine)return;var titleEl=document.querySelector('.settings-modal__title');var modal=document.getElementById('settings-modal');if(name==='engine'){settings.hidden=true;engine.hidden=false;if(!opts.preserveScroll)view.scrollTop=0;if(titleEl)titleEl.innerHTML='Engine <em>Room</em>';if(modal)modal.classList.add('settings-modal--engine');}else{settings.hidden=false;engine.hidden=true;if(!opts.preserveScroll)view.scrollTop=0;if(titleEl)titleEl.textContent='Settings';if(modal)modal.classList.remove('settings-modal--engine');}}
@@ -1060,7 +1060,7 @@ function _prefsGroup(label,inner,section){if(!inner)return'';var undo=section?'<
 undo+'</div>'+inner+'</section>';}
 function _prefsBodyHtml(c){var html='';if(c.tags.length){var chips='';for(var i=0;i<c.tags.length;i++)chips+=renderS2SubcatChip(c.tags[i]);var legend='<div class="scoring-prefs__legend" aria-hidden="true">'+'<span>♥ Love</span><span>✓ Like</span>'+'<span>○ Meh</span><span>− Avoid</span></div>';html+=_prefsGroup('Tags',legend+'<div class="s2-chip-grid">'+chips+'</div>','tags');}
 if(c.feels.length){var fi='';for(var f=0;f<c.feels.length;f++)fi+=_prefsFacetRow(c.feels[f],'facet');html+=_prefsGroup('Themes',fi,'feels');}
-if(c.rules.length){var ri='';for(var r=0;r<c.rules.length;r++)ri+=_prefsRuleControl(c.rules[r]);html+=_prefsGroup('Rules',ri,'rules');}
+if(c.rules.length){var ri='';for(var r=0;r<c.rules.length;r++)ri+=_prefsRuleControl(c.rules[r]);html+=_prefsGroup('Boosts',ri,'rules');}
 if(c.identity.length){var ii='';for(var d=0;d<c.identity.length;d++)ii+=_prefsFacetRow(c.identity[d],'incl');html+=_prefsGroup('Who it’s for',ii,'identity');}
 if(c.venue)html+=_prefsGroup('Venue',_prefsVenueControl(c.venue),'venue');if(c.suburb)html+=_prefsGroup('Where',_prefsSuburbControl(c.suburb),'where');if(!html){html='<p class="scoring-prefs__empty">No quick adjustments for this '+'event — open Settings to tune.</p>';}
 return html;}
