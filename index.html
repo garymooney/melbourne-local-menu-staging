@@ -721,7 +721,7 @@ return parts.join('\n')+renderScoreChipCrumb();}
 function s2SubcatGroupMeta(tags){var set=0,avoided=0;var tiers=profile.subcategory_tiers||{};for(var i=0;i<tags.length;i++){var t=tiers[tags[i]]||'neutral';if(t==='love'||t==='like')set++;else if(t==='avoid'){set++;avoided++;}}
 if(set===0)return'';if(avoided===0)return set+' set';return set+' set · '+avoided+' avoided';}
 function renderS2EngineRoomLink(modified){return('<button type="button" class="s2-engine-link" '+'data-s2-enter-engine>'+'<div class="s2-engine-link__inner">'+'<div class="s2-engine-link__title">Engine <em>Room</em>'+
-(modified?' '+s2ModDot():'')+'</div>'+'<div class="s2-engine-link__sub">'+'The scoring engine, exposed. For when you really want to '+'look under the hood.'+'</div>'+'</div>'+'<span class="s2-engine-link__arrow" aria-hidden="true">&rarr;</span>'+'</button>');}
+(modified?' '+s2ModDot():'')+'</div>'+'<div class="s2-engine-link__sub">'+'The scoring engine, exposed.'+'</div>'+'</div>'+'<span class="s2-engine-link__arrow" aria-hidden="true">&rarr;</span>'+'</button>');}
 function renderS2PreambleNote(){return('<div class="s2-preamble-note">'+'<div class="s2-preamble-note__text">'+'Nothing here learns about you. The engine only does what you '+'tell it. Your tweaks persist — pop back any time and the menu '+'picks up how you set it. (Safari resets after a week away.)'+'</div>'+'</div>');}
 function s2WatchlistPreview(){var v=(profile.priority_venues||[]).length
 +(profile.saved_venues||[]).length;var a=(profile.priority_artists||[]).length
