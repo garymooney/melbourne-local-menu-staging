@@ -745,7 +745,7 @@ profile[prioKey]=prio;profile[savedKey]=[];changed=true;});profile.watchlist_bin
 saveProfile();}
 function renderS2SettingsView(){var counts=settingsTabModifiedCounts();return('<div class="s2-view s2-view--settings" data-s2-view="settings">'+
 renderS2PreambleNote()+
-renderS2Collapse({name:'watchlist',label:'Watchlists',preview:s2WatchlistPreview(),helper:'Artists and venues you follow. Shown before other events.',body:renderS2WatchlistsBody(),modified:counts.watchlist>0,resetAction:'reset-watchlist',resetLabel:'reset',})+
+renderS2Collapse({name:'watchlist',label:'Following',preview:s2WatchlistPreview(),helper:'Artists and venues you follow. Shown before other events.',body:renderS2WatchlistsBody(),modified:counts.watchlist>0,resetAction:'reset-watchlist',resetLabel:'reset',})+
 renderS2Collapse({name:'tags',label:'Event tags',preview:s2TagsPreview(),helper:'Boost or hide topics. Tap a tag to cycle your preference.',body:renderS2TagsBody(),modified:counts.tags>0,resetAction:'reset-tags',resetLabel:'reset',})+
 renderS2Collapse({name:'vibes',label:'Event themes',preview:s2FeelsPreview(),helper:'How drawn you are to each kind of experience. Tap to cycle your preference.',body:renderS2FeelsBody(),modified:counts.vibes>0,resetAction:'reset-vibes',resetLabel:'reset',})+
 renderS2Collapse({name:'suburbs',label:'Suburbs',preview:s2SuburbsPreview(),body:renderSuburbsPanel(),modified:counts.suburbs>0,resetAction:'reset-suburbs',resetLabel:'reset',})+
