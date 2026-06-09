@@ -902,7 +902,7 @@ catch(_){try{searchInputEl.focus();}catch(_){}}
 didRefocus=true;}
 if((allowCaretReset||didRefocus)&&caretStart!=null&&caretEnd!=null){try{searchInputEl.setSelectionRange(caretStart,caretEnd);}catch(_){}}}
 _restoreSearchFocus(true);requestAnimationFrame(function(){_restoreSearchFocus(false);});}
-function clearSearch(){searchQueryRaw='';selectedTags=[];if(searchInputEl)searchInputEl.value='';if(searchClearBtn)searchClearBtn.hidden=true;renderAll({preserveScores:true});updateSearchSuggest();}
+function clearSearch(){searchQueryRaw='';selectedTags=[];if(searchInputEl)searchInputEl.value='';if(searchClearBtn)searchClearBtn.hidden=true;renderAll({preserveScores:true});if(viewState.searchPanelOpen)updateSearchSuggest();else hideSearchSuggest();}
 function setAllWeekActive(active){if(viewState.showAllDays===active)return;_clearTextSelection();viewState.showAllDays=active;if(active)viewState.lastFeedView='all-week';saveViewState();if(weekPillBtn){weekPillBtn.setAttribute('aria-pressed',active?'true':'false');}
 renderAll({preserveScores:true});}
 function toggleAllDays(){setAllWeekActive(true);}
