@@ -1051,8 +1051,8 @@ escapeHtml(_prefsFacetDisplayName(name))+'</span>'+
 function _prefsGroup(label,inner){if(!inner)return'';return'<section class="scoring-prefs__group">'+'<h3 class="scoring-prefs__group-label">'+escapeHtml(label)+'</h3>'+
 inner+'</section>';}
 function _prefsBodyHtml(c){var html='';if(c.tags.length){var chips='';for(var i=0;i<c.tags.length;i++)chips+=renderS2SubcatChip(c.tags[i]);var legend='<div class="scoring-prefs__legend" aria-hidden="true">'+'<span>♥ Love</span><span>✓ Like</span>'+'<span>○ Meh</span><span>− Avoid</span></div>';html+=_prefsGroup('Tags',legend+'<div class="s2-chip-grid">'+chips+'</div>');}
-if(c.rules.length){var ri='';for(var r=0;r<c.rules.length;r++)ri+=_prefsRuleControl(c.rules[r]);html+=_prefsGroup('Rules',ri);}
 if(c.feels.length){var fi='';for(var f=0;f<c.feels.length;f++)fi+=_prefsFacetRow(c.feels[f],'facet');html+=_prefsGroup('Feels',fi);}
+if(c.rules.length){var ri='';for(var r=0;r<c.rules.length;r++)ri+=_prefsRuleControl(c.rules[r]);html+=_prefsGroup('Rules',ri);}
 if(c.identity.length){var ii='';for(var d=0;d<c.identity.length;d++)ii+=_prefsFacetRow(c.identity[d],'incl');html+=_prefsGroup('Who it’s for',ii);}
 if(c.venue)html+=_prefsGroup('Venue',_prefsVenueControl(c.venue));if(c.suburb)html+=_prefsGroup('Where',_prefsSuburbControl(c.suburb));if(!html){html='<p class="scoring-prefs__empty">No quick adjustments for this '+'event — open Settings to tune.</p>';}
 return html;}
